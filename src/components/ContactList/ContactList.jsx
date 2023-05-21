@@ -8,7 +8,7 @@ import { useGetContactsQuery } from '../../redux/contactsApi';
 
 const ContactList=()=>{
 
-  const { data, isFetching, isSuccess } = useGetContactsQuery();
+  const { data, isFetching, isSuccess, error } = useGetContactsQuery();
   const filter = useSelector(getFilter);  
 
   const filteredContacts = (contactsData, filterValue) =>{
@@ -24,6 +24,10 @@ const ContactList=()=>{
      
     return(
              <ul className={css.contacts}>
+                  {error&&<p style={{
+        fontSize:32,          
+        color: 'red'
+      }}>{error}</p>} 
               {isFetching&&<Loader visible={true}/>}
                {isSuccess&&contacts.length>0 ? !isFetching&&contacts
 			.map(({name, phone, id}) => (
